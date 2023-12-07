@@ -1,0 +1,34 @@
+basePath: /api/v1
+info:
+  contact: {}
+  description: This is an auto-generated API Docs.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: API
+  version: "1.0"
+paths:
+  /wallet/create/{coin}:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: Coin
+        in: path
+        name: coin
+        required: true
+        type: string
+      responses:
+        "200":
+          description: OK
+        "400":
+          description: Bad Request
+        "401":
+          description: Unauthorized
+        "500":
+          description: Internal Server Error
+      summary: Добавить кошелек
+      tags:
+      - wallet
+swagger: "2.0"

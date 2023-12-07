@@ -1,0 +1,21 @@
+app:
+  is-development: true
+  name: task app
+
+postgresql:
+  host: postgres
+  port: 5432
+  username: root
+  password: "secret"
+  database: "backend"
+  max_conn: 100
+  max_idle_conn: 10
+  max_lifetime_conn: 2
+  max_attempts: 5
+  max_delay: 5
+
+http:
+  host: 0.0.0.0
+  port: 8080
+  read-timeout: 45s
+  write-timeout: 45s

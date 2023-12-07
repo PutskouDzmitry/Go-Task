@@ -1,0 +1,36 @@
+version: "2.2"
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres-1
+    restart: always
+    ports:
+      - 127.0.0.1:5432:5432
+    environment:
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: secret
+      POSTGRES_DB: backend
+    volumes:
+      - ./datasets:/datasets
+      - ./psql:/var/lib/postgresql/data
+    networks:
+      - backend_mco
+  app:
+    container_name: app-1
+    build:
+      context: .
+      dockerfile: DockerFile
+    restart: always
+    ports:
+      - 127.0.0.1:8080:8080
+    volumes:
+      - ./logs:/app/logs
+      - ./resources:/app/resources
+    depends_on:
+      - postgres
+    networks:
+      - backend_mco
+
+networks:
+  backend_mco:
+    name: backend_mco

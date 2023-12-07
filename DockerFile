@@ -1,0 +1,27 @@
+## Build
+FROM golang:latest AS build
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod graph | awk '{if ($1 !~ "@") print $2}' | xargs go get
+RUN go install github.com/swaggo/swag/cmd/swag@v1.16.1
+
+COPY . .
+
+ENV GIN_MODE=debug
+ENV CONFIG_PATH=configs/config.build.yaml
+ENV CONFIG_NAME=config.build.yaml
+ENV LOG_LEVEL=info
+ENV LOG_FILE_PATH=logs/
+ENV APP_MODE=development
+
+ENV GOOS linux
+ENV CGO_ENABLED 0
+
+RUN make swag
+RUN make build
+
+CMD ["./build/app"]
